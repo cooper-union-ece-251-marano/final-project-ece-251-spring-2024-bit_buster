@@ -20,6 +20,9 @@ module alu
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
+    input logic [n-1:0] a,b 
+    input logic [2;0] ctrl
+    output logic [n-1:0] r 
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------

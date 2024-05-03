@@ -30,7 +30,7 @@ module tb_adder;
         a <= #n'hFFFFFFFF;
         b <= #n'hFFFFFFFF;
 
-        // more tests
+        // tests
         a = $random; b = $random;
         a = 32'hFFFFFFFF; b = 32'h00000001; #10;  
         a = 32'h80000000; b = 32'h80000000; #10;  

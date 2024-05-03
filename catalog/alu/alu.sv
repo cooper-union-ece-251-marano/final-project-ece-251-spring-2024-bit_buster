@@ -23,10 +23,12 @@ module alu
     input logic [n-1:0] a,b 
     input logic [2;0] ctrl
     output logic [n-1:0] r 
+    output logic zero
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
+    
 
 endmodule
 

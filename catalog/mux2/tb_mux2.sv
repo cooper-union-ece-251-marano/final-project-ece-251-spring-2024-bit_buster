@@ -3,7 +3,7 @@
 // ECE 251 Spring 2024
 // Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-01
 //     Module Name: tb_mux2
 //     Description: Test bench for 2 to 1 multiplexer
 //

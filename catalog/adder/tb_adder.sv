@@ -18,21 +18,27 @@
 
 module tb_adder;
     parameter n = 32;
-    logic [(n-1):0] a, b, y;
+    logic [(n-1):0] a, b, c;
 
    initial begin
         $dumpfile("adder.vcd");
         $dumpvars(0, uut);
-        $monitor("a = 0x%0h b = 0x%0h y = 0x%0h", a, b, y);
+        $monitor("a = 0x%0h b = 0x%0h y = 0x%0h", a, b, c);
     end
 
     initial begin
         a <= #n'hFFFFFFFF;
         b <= #n'hFFFFFFFF;
+
+        // more tests
+        A = $random; B = $random;
+        A = 32'hFFFFFFFF; B = 32'h00000001; #10;  
+        A = 32'h80000000; B = 32'h80000000; #10;  
+        A = 32'h00000001; B = 32'h00000001; #10;  
     end
 
     adder uut(
-        .A(a), .B(b), .Y(y)
+        .A(a), .B(b), .C(c)
     );
 endmodule
 `endif // TB_ADDER

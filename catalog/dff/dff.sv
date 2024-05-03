@@ -21,7 +21,7 @@ module dff
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input  logic clk, rst,
+    input  logic clk, reset,
     input  logic [(n-1):0] q,
     output logic [(n-1):0] qn
 );

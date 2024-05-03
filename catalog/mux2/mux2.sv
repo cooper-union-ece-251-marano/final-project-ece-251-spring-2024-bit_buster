@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-01
 //     Module Name: mux2
 //     Description: 2 to 1 multiplexer
 //
@@ -20,14 +20,15 @@ module mux2
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input  logic [(n-1):0] D0, D1,
-    input  logic S,
-    output logic [(n-1):0] Y
+    input logic [(n-1):0] A,
+    input logic [(n-1):0] B,
+    input logic sel,
+    output logic [(n-1):0] C
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign Y = S ? D1 : D0;
+    assign C = (A & ~sel) | (B & sel); // if sel is 0 => C => A, otherwise, C => B.
 endmodule
 
 `endif // MUX2

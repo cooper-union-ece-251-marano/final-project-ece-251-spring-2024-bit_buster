@@ -19,10 +19,10 @@
 `include "../clock/clock.sv"
 
 module tb_dff;
-    parameter n = 8;      // Testing an 8-bit dff
-    reg clk, reset;       // Clock and reset 
-    reg [n-1:0] q;         // Data input for the DFF
-    wire [n-1:0] qn;       // Output from the DFF
+    parameter n = 32;      // Testing an 32-bit dff
+    logic clk, reset;       // Clock and reset 
+    logic [n-1:0] q;         // Data input for the DFF
+    logic [n-1:0] qn;       // Output from the DFF
 
     // UUT
     dff #(.n(n)) uut (
@@ -66,3 +66,4 @@ module tb_dff;
     end
 
 endmodule
+`endif

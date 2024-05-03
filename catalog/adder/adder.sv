@@ -20,7 +20,7 @@ module adder
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input logic [n-1:0] A, B;
+    input logic [n-1:0] A, B,
     output logic [n-1:0] C
 );
     //

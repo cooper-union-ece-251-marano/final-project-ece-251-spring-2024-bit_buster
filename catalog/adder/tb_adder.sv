@@ -31,10 +31,10 @@ module tb_adder;
         b <= #n'hFFFFFFFF;
 
         // more tests
-        A = $random; B = $random;
-        A = 32'hFFFFFFFF; B = 32'h00000001; #10;  
-        A = 32'h80000000; B = 32'h80000000; #10;  
-        A = 32'h00000001; B = 32'h00000001; #10;  
+        a = $random; b = $random;
+        a = 32'hFFFFFFFF; b = 32'h00000001; #10;  
+        a = 32'h80000000; b = 32'h80000000; #10;  
+        a = 32'h00000001; b = 32'h00000001; #10;  
     end
 
     adder uut(

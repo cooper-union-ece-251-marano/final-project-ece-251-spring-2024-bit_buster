@@ -1,7 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu> (from HW2)
+// Engineer: Lindsey R
 // 
 //     Create Date: 2023-02-07
 //     Module Name: dff
@@ -20,23 +21,16 @@ module dff
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input  logic CLOCK, RESET,
-    input  logic [(n-1):0] D,
-    output logic [(n-1):0] Q
+    input  logic clk, rst,
+    input  logic [(n-1):0] q,
+    output logic [(n-1):0] qn
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    always @(posedge CLOCK, posedge RESET)
-    begin
-        if (RESET)
-        begin
-            Q <= 0;
-        end
-        else
-        begin
-            Q <= D;
-        end
+    always @(posedge clk or posedge reset) begin
+        if (reset) qn <= {n{1'b0}}; // if reset is active, reset the output to all zeros
+        else qn <= q; // capture the data input at the positive clock edge
     end
 endmodule
 

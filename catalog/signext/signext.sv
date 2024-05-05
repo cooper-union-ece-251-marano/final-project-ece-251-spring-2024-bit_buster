@@ -21,12 +21,12 @@ module signext
     // ---------------- PORT DEFINITIONS ----------------
     //
     input  logic [(i-1):0] A,
-    output logic [(n-1):0] Y
+    output logic [(n-1):0] C
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign Y = { {n{A[(i-1)]}}, A}; // sign extend (i-1)th bit i bits to the left.
+    assign Y = {{(n-i){A[i-1]}}, A}; // rewritten
 endmodule
 
 `endif // SIGNEXT

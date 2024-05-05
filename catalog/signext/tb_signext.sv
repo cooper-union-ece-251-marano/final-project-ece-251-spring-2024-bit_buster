@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
 //     Create Date: 2023-02-07
 //     Module Name: tb_signext
@@ -18,23 +18,64 @@
 
 module tb_sl2;
     parameter n = 32; // #bits for an operand
-    parameter i = n/2; // #bits for an immediate
+    parameter i = 16; // #bits for an immediate
     logic [(i-1):0] a;
-    logic [(n-1):0] y;
+    logic [(n-1):0] c;
 
    initial begin
         $dumpfile("signext.vcd");
         $dumpvars(0, uut);
-        //$monitor("a = %b (0x%0h)(%0d) y = %b (0x%0h)(%0d) ", a, a, a, y, y, y);
-        $monitor("time=%0t \t a=%b y=%b",$realtime, a, y);
+        $monitor("time=%0t \t a=%b c=%b", $realtime, a, c);
     end
 
     initial begin
+        // Positive number sign extension
+        a <= #i'h1234;
+        #10;
+
+        // Negative number sign extension
         a <= #i'h8000;
+        #10;
+
+        // Maximum positive number sign extension
+        a <= #i'h7FFF;
+        #10;
+
+        // Minimum negative number sign extension
+        a <= #i'h8000;
+        #10;
+
+        // Zero sign extension
+        a <= #i'h0000;
+        #10;
+
+        // Random positive number sign extension
+        a <= #i'h6789;
+        #10;
+
+        // Random negative number sign extension
+        a <= #i'hA432;
+        #10;
+
+        // Maximum positive number with added bits sign extension
+        a <= #i'h7FFF;
+        #10;
+
+        // Minimum negative number with added bits sign extension
+        a <= #i'h8000;
+        #10;
+
+        // random
+        a <= #i'h0A1F;
+        #10;
+        a <= #i'hB2F0;
+        #10;
+
+        // Add more test cases if needed...
     end
 
     signext uut(
-        .A(a), .Y(y)
+        .A(a), .C(c)
     );
 endmodule
 `endif // TB_SIGNEXT

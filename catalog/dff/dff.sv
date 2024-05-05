@@ -2,7 +2,7 @@
 // The Cooper Union
 // ECE 251 Spring 2024
 // Engineer: Grace Tseng <grace.tseng@cooper.edu> (from HW2)
-// Engineer: Lindsey R
+//
 // 
 //     Create Date: 2024-05-01
 //     Module Name: dff

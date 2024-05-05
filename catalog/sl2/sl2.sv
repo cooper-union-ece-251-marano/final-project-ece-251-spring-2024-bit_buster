@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-04
 //     Module Name: sl2
 //     Description: shift left by 2 (multiply by 4)
 //
@@ -20,13 +20,13 @@ module sl2
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input  logic [(n-1):0] A,
-    output logic [(n-1):0] Y
+    input  logic [(31):0] A,
+    output logic [(31):0] C
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign Y = {A[(n-3):0], 2'b00};
+    assign C = {A << 2, 2'b00};
 endmodule
 
 `endif // SL2

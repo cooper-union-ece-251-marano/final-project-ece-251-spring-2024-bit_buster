@@ -10,36 +10,28 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef ALUDEC
-`define ALUDEC
+`define ALU_DECODER
 
-`timescale 1ns/100ps
+`timescale 1ns/1ns
 
-module aludec
-    #(parameter n = 32)
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
+module alu_decoder (
+  input logic [2:0] alu_control,
+    output logic [5:0] alu_opcode
+);
 
-    input [5:0] = control signals
-    output [2,0] = ctrl 
 
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
-    always @(*) begin
-        
-        case(op)
-        
-            2'b000 r = a&b // AND
-            2'b000 r = a|b // OR
-            2'b000 r = a+b // ADD
-            2'b000 r = ~(a+b) // NOR
-            2'b001 r = a-b // SUB
-            2'b000 r = a<<b // Shift Left
-            2'b000 r = a>>b // Shift Right
-        
+always_comb begin
+    case (alu_control)
+        3'b000: alu_opcode = 6'b0000; // Add
+        3'b001: alu_opcode = 6'b0001; // Subtract
+        3'b010: alu_opcode = 6'b0010; // AND
+        3'b011: alu_opcode = 6'b0011; // OR
+        3'b100: alu_opcode = 6'b0100; // XOR
+        3'b101: alu_opcode = 6'b0101; // Shift left
+        3'b110: alu_opcode = 6'b0110; // Shift right
+        3'b111: alu_opcode = 6'b0111; // SLT (Set on less than)
+        default: alu_opcode = 6'b0000; // Default to Add
+    endcase
+end
 
 endmodule
-
-`endif // ALUDEC

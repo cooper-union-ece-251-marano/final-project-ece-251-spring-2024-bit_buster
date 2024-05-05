@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Grace Tseng Lindsey 
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
 //     Create Date: 2023-02-07
 //     Module Name: adder

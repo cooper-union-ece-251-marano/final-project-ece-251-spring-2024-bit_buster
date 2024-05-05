@@ -1,14 +1,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Lindsey
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: controller
 //     Description: 32-bit RISC-based CPU controller (MIPS)
 //
 // Revision: 1.0
-//
+// 
 //////////////////////////////////////////////////////////////////////////////////
 `ifndef CONTROLLER
 `define CONTROLLER

@@ -4,7 +4,7 @@
 // Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
 //     Create Date: 2025-05-04
-//     Module Name: tb_adder 
+//     Module Name: tb_adder
 //     Description: Test bench for simple behavorial adder
 //
 // Revision: 1.0

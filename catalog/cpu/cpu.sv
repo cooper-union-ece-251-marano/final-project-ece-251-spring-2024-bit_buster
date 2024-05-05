@@ -10,48 +10,64 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef COMPUTER
-`define COMPUTER
+`ifndef CPU
+`define CPU
 
 `timescale 1ns/100ps
 
-`include "../cpu/cpu.sv"
-`include "../imem/imem.sv"
-`include "../dmem/dmem.sv"
+`include "../controller/controller.sv"
+`include "../datapath/datapath.sv"
 
-module computer #(parameter n = 32)(
-    
-    input  logic           clk, reset, 
-    output logic [(n-1):0] writedata, dataadr, 
-    output logic           memwrite
+module cpu #(
+    parameter n = 32
+)(
+   
+    input  logic           clk, reset,
+    output logic [(n-1):0] pc,
+    input  logic [(n-1):0] instr,
+    output logic           memwrite,
+    output logic [(n-1):0] aluout, writedata,
+    input  logic [(n-1):0] readdata
 );
-    logic [(n-1):0] pc, instr, readdata;
+    
+    // Internal signals for CPU components
+    logic memtoreg, alusrc, regdst, regwrite, jump, pcsrc, zero;
+    logic [2:0] alucontrol;
 
-    // Internal components
+    // Controller instantiation
+    controller #(.n(n)) c(
+        .opcode(instr[31:26]),
+        .funct(instr[5:0]),
+        .zero(zero),
+        .memtoreg(memtoreg),
+        .memwrite(memwrite),
+        .pcsrc(pcsrc),
+        .alusrc(alusrc),
+        .regdst(regdst),
+        .regwrite(regwrite),
+        .jump(jump),
+        .alucontrol(alucontrol)
+    );
 
-    // CPU
-    cpu mips(
+    // Datapath instantiation
+    datapath #(.n(n)) dp(
         .clk(clk),
         .reset(reset),
+        .memtoreg(memtoreg),
+        .pcsrc(pcsrc),
+        .alusrc(alusrc),
+        .regdst(regdst),
+        .regwrite(regwrite),
+        .jump(jump),
+        .alucontrol(alucontrol),
+        .zero(zero),
         .pc(pc),
         .instr(instr),
-        .memwrite(memwrite),
-        .dataadr(dataadr),
-        .writedata(writedata),
-        .readdata(readdata)
-    );
-    
-    // Instruction memory ("text segment") in main memory
-    imem imem(pc[7:2], instr);
-   
-    // Data memory ("data segment") in main memory
-    dmem dmem(
-        .clk(clk),
-        .memwrite(memwrite),
-        .dataadr(dataadr),
+        .aluout(aluout),
         .writedata(writedata),
         .readdata(readdata)
     );
 
 endmodule
-`endif // COMPUTER
+
+`endif // CPU

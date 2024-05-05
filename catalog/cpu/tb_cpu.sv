@@ -15,59 +15,58 @@
 
 `timescale 1ns/100ps
 
-module computer_tb;
+module cpu_tb;
 
-    parameter n = 32;
+    // Parameters
+    parameter N = 32;
 
-    // Define test signals
-    logic clk;
-    logic reset;
-    logic [n-1:0] writedata;
-    logic [n-1:0] dataadr;
+    // Inputs
+    logic clk, reset;
+    logic [N-1:0] instr;
+
+    // Outputs
+    logic [N-1:0] pc, aluout, writedata, readdata;
     logic memwrite;
 
-    // Instantiate computer module
-    computer #(n) comp (
+    // Instantiate the CPU module
+    cpu #(
+        .n(N)
+    ) uut (
         .clk(clk),
         .reset(reset),
+        .pc(pc),
+        .instr(instr),
+        .memwrite(memwrite),
+        .aluout(aluout),
         .writedata(writedata),
-        .dataadr(dataadr),
-        .memwrite(memwrite)
+        .readdata(readdata)
     );
 
     // Clock generation
-    initial begin
-        clk = 0;
-        forever #5 clk = ~clk;
-    end
+    always #5 clk = ~clk;
 
-    // Reset initialization
+    // Reset generation
     initial begin
         reset = 1;
-        #10;
-        reset = 0;
+        #10 reset = 0;
     end
 
-    // Stimulus generation and assertion checks
-    // Example test case: Assert that memwrite is low initially
+    // Stimulus generation
     initial begin
-        // Wait for some time to ensure initialization
-        #100;
+        // Wait for initial reset to complete
+        #20;
 
-        // Assertion to check memwrite initially low
-        assert(memwrite == 0)
-            else $error("Test case failed: memwrite is not low initially");
+        // Send some sample instructions
+        instr = 32'h00001000; // Example instruction
+        #10;
+        instr = 32'h00002000; // Another example instruction
+        #10;
+        // Add more instructions as needed
 
-        // Display result of the assertion
-        $display("Test case 1: memwrite is low initially. memwrite = %b", memwrite);
-
-        // Add more test cases as needed
-
-        // Finish simulation after a certain time
-        #1000;
-        $finish;
+        // End simulation
+        #100 $finish;
     end
 
 endmodule
 
-`endif 
+`endif

@@ -10,57 +10,82 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef TB_ALU
-`define TB_ALU
+`ifndef _alu_tb
+`define _alu_tb
 
 `timescale 1ns/100ps
 
 module alu_tb;
 
-    // Parameters
-    parameter N = 32; // Width of input vectors
+parameter N = 32;
 
-    // Inputs
-    reg [N-1:0] a, b;
-    reg [2:0] ctrl;
-    
-    // Outputs
-    wire [N-1:0] r;
-    wire zero;
+logic [N-1:0] a, b;
+logic [2:0] alu_ctrl;
+logic [N-1:0] result;
+logic fZ;
 
-    // Instantiate the ALU
-    alu #(N) alu_inst(
-        .a(a),
-        .b(b),
-        .ctrl(ctrl),
-        .r(r),
-        .zero(zero)
-    );
+// Instantiate 
+alu #(.n(N)) uut (
+    .a(a),
+    .b(b),
+    .alu_ctrl(alu_ctrl),
+    .result(result),
+    .fZ(fZ)
+);
 
-    // Test bench stimulus
-    initial begin
-        $display("Starting ALU test bench...");
-        
-        // Test cases
-        // You can modify or add test cases as needed
-        
-        // Test case 1: AND operation
-        a = 8'b10101010;
-        b = 8'b11001100;
-        ctrl = 3'b000;
-        #10;
-        $display("Test case 1: a = %b, b = %b, ctrl = %b, r = %b, zero = %b", a, b, ctrl, r, zero);
-        
-        // Test case 2: ADD operation
-        a = 8'b10101010;
-        b = 8'b11001100;
-        ctrl = 3'b010;
-        #10;
-        $display("Test case 2: a = %b, b = %b, ctrl = %b, r = %b, zero = %b", a, b, ctrl, r, zero);
-        
-        // Add more test cases as needed
-        
-        $finish; // End simulation
-    end
+initial begin
+    // Test Add
+    a = 32'h12345678;
+    b = 32'h87654321;
+    alu_ctrl = 3'b000; 
+    #10;
+
+    // Test Subtract
+    a = 32'h87654321;
+    b = 32'h12345678;
+    alu_ctrl = 3'b001; 
+    #10;
+
+    // Test AND
+    a = 32'habcdef00;
+    b = 32'h00ff00ff;
+    alu_ctrl = 3'b010; 
+    #10;
+
+    // Test OR
+    a = 32'habcdef00;
+    b = 32'h00ff00ff;
+    alu_ctrl = 3'b011; 
+    #10;
+
+    // Test XOR
+    a = 32'habcdef00;
+    b = 32'h00ff00ff;
+    alu_ctrl = 3'b100; 
+    #10;
+
+    // Test Shift left
+    a = 32'habcdef00;
+    b = 5;
+    alu_ctrl = 3'b101; 
+    #10;
+
+    // Test Shift right
+    a = 32'habcdef00;
+    b = 5;
+    alu_ctrl = 3'b110; 
+    #10;
+
+    // Test Set on less than
+    a = 32'h12345678;
+    b = 32'habcdef00;
+    alu_ctrl = 3'b111; 
+    #10;
+
+    // End simulation
+    #10 $finish;
+end
 
 endmodule
+
+`endif // ALUTB

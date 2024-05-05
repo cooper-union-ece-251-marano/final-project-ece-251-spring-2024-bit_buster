@@ -3,7 +3,7 @@
 // ECE 251 Spring 2024
 // Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-// Create Date: 2024-05-01
+// Create Date: 2024-05-01 
 // Module Name: tb_clock
 // Description: Test bench for clock generator
 //

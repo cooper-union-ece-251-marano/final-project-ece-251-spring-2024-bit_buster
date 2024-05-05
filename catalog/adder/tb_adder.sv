@@ -3,7 +3,7 @@
 // ECE 251 Spring 2024
 // Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2025-05-04 
+//     Create Date: 2025-05-04
 //     Module Name: tb_adder
 //     Description: Test bench for simple behavorial adder
 //

@@ -3,7 +3,7 @@
 // ECE 251 Spring 2024
 // Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: tb_sl2
 //     Description: Test bench for shift left by 2 (multiply by 4)
 //

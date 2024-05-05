@@ -10,45 +10,48 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef CPU
-`define CPU
+`ifndef COMPUTER
+`define COMPUTER
 
 `timescale 1ns/100ps
 
-`include "../controller/controller.sv"
-`include "../datapath/datapath.sv"
+`include "../cpu/cpu.sv"
+`include "../imem/imem.sv"
+`include "../dmem/dmem.sv"
 
-module cpu
-    #(parameter n = 32)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
-    input  logic           clk, reset,
-    output logic [(n-1):0] pc,
-    input  logic [(n-1):0] instr,
-    output logic           memwrite,
-    output logic [(n-1):0] aluout, writedata,
-    input  logic [(n-1):0] readdata
-);
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
-
-    // cpu internal components
-    logic       memtoreg, alusrc, regdst, regwrite, jump, pcsrc, zero;
-    logic [2:0] alucontrol;
+module computer #(parameter n = 32)(
     
-    controller c(instr[(31):26], instr[5:0], zero,
-                    memtoreg, memwrite, pcsrc,
-                    alusrc, regdst, regwrite, jump,
-                    alucontrol);
+    input  logic           clk, reset, 
+    output logic [(n-1):0] writedata, dataadr, 
+    output logic           memwrite
+);
+    logic [(n-1):0] pc, instr, readdata;
 
-    datapath dp(clk, reset, memtoreg, pcsrc,
-                    alusrc, regdst, regwrite, jump,
-                    alucontrol,
-                    zero, pc, instr,
-                    aluout, writedata, readdata);
+    // Internal components
+
+    // CPU
+    cpu mips(
+        .clk(clk),
+        .reset(reset),
+        .pc(pc),
+        .instr(instr),
+        .memwrite(memwrite),
+        .dataadr(dataadr),
+        .writedata(writedata),
+        .readdata(readdata)
+    );
+    
+    // Instruction memory ("text segment") in main memory
+    imem imem(pc[7:2], instr);
+   
+    // Data memory ("data segment") in main memory
+    dmem dmem(
+        .clk(clk),
+        .memwrite(memwrite),
+        .dataadr(dataadr),
+        .writedata(writedata),
+        .readdata(readdata)
+    );
 
 endmodule
-
-`endif // CPU
+`endif // COMPUTER

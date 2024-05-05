@@ -45,8 +45,6 @@ module controller
       regwrite, 
       jump, 
       aluop);
-    // CPU's ALU decoder
-    aludec  ad(funct, aluop, alucontrol);
 
   assign pcsrc = branch & zero;
 

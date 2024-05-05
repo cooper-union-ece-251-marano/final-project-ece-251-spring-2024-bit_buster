@@ -10,37 +10,42 @@
 // Revision: 1.0
 // see https://github.com/Caskman/MIPS-Processor-in-Verilog/blob/master/ALU32Bit.v
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef ALU
-`define ALU
+`ifndef _alu
+`define _alu
 
-`timescale 1ns/100ps
+`timescale 1ns/1ns
 
-module alu
-    #(parameter n = 32)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
-    input logic [n-1:0] a,b 
-    input logic [2;0] ctrl
-    output logic [n-1:0] r 
-    output logic zero
+module alu #(parameter n = 32)(
+    input logic [n-1:0] a,          
+    input logic [n-1:0] b,          
+  input logic [2:0] alu_ctrl,    
+
+    output logic [n-1:0] result, 
+    output logic fZ              // zero flag
 );
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
-    always @(*)begin
-        case (ctrl[1:0])
 
-        2'b000 r = a&b // AND
-        2'b000 r = a|b // OR
-        2'b000 r = a+b // ADD
-        2'b000 r = ~(a+b) // NOR
-        2'b001 r = a-b // SUB
-        2'b000 r = a<<b // Shift Left
-        2'b000 r = a>>b // Shift Right
+always @(*) begin
+  case(alu_ctrl)
+        3'b000: result = a + b;     // Add
+        3'b001: result = a - b;     // Subtract
+        3'b010: result = a & b;     // AND
+        3'b011: result = a | b;     // OR
+        3'b100: result = a ^ b;     // XOR
+        3'b101: result = a << b;    // Shift left
+        3'b110: result = a >> b;    // Shift right 
+        3'b111: begin              // SLT
+                    if (a < b) begin
+                        result = 1;
+                    end else begin
+                        result = 0;
+                    end
+                end
+        default: result = 32'b0;    // Default to 0
+    endcase
 
-        endcase
-        assign zero=(r==0);
+    fZ = (result == 32'b0) ? 1'b1 : 1'b0;
+end
+
 endmodule
 
 `endif // ALU

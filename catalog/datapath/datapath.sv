@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: datapath
 //     Description: 32-bit RISC-based CPU datapath (MIPS)
 //
@@ -28,12 +28,12 @@ module datapath
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input  logic        clk, reset,
-    input  logic        memtoreg, pcsrc,
-    input  logic        alusrc, regdst,
-    input  logic        regwrite, jump,
+    input  logic clk, reset,
+    input  logic memtoreg, pcsrc,
+    input  logic alusrc, regdst,
+    input  logic regwrite, jump,
     input  logic [2:0]  alucontrol,
-    output logic        zero,
+    output logic zero,
     output logic [(n-1):0] pc,
     input  logic [(n-1):0] instr,
     output logic [(n-1):0] aluout, writedata,

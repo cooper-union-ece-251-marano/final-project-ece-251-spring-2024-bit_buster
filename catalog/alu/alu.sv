@@ -13,7 +13,7 @@
 `ifndef _alu
 `define _alu
 
-`timescale 1ns/1ns
+`timescale 1ns/100ps
 
 module alu #(parameter n = 32)(
     input logic [n-1:0] a,          

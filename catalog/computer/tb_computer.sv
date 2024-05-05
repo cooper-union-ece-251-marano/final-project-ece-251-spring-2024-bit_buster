@@ -23,7 +23,7 @@ module tb_computer;
   parameter m = 5;  // # bits to represent the address of the 2**m=32 GPRs in the CPU
   logic clk;
   logic clk_enable;
-  logic reset;
+  logic rst;
   logic memwrite;
   logic [31:0] writedata;
   logic [31:0] dataadr;
@@ -31,7 +31,7 @@ module tb_computer;
   logic firstTest, secondTest;
 
   // instantiate the CPU as the device to be tested
-  computer dut(clk, reset, writedata, dataadr, memwrite);
+  computer dut(clk, rst, writedata, dataadr, memwrite);
   // generate clock to sequence tests
   // always
   //   begin
@@ -46,7 +46,7 @@ module tb_computer;
     firstTest = 1'b0;
     secondTest = 1'b0;
     $dumpfile("tb_computer.vcd");
-    $dumpvars(0,dut1,clk,reset,writedata,dataadr,memwrite);
+    $dumpvars(0,dut1,clk,rst,writedata,dataadr,memwrite);
     $monitor("t=%t\t0x%7h\t%7d\t%8d",$realtime,writedata,dataadr,memwrite);
     // $dumpvars(0,clk,a,b,ctrl,result,zero,negative,carryOut,overflow);
     // $display("Ctl Z  N  O  C  A                    B                    ALUresult");
@@ -55,7 +55,7 @@ module tb_computer;
 
   // initialize test
   initial begin
-    #0 clk_enable <= 0; #50 reset <= 1; # 50; reset <= 0; #50 clk_enable <= 1;
+    #0 clk_enable <= 0; #50 rst <= 1; # 50; rst <= 0; #50 clk_enable <= 1;
     #100 $finish;
   end
 

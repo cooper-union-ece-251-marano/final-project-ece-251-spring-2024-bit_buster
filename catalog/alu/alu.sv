@@ -28,8 +28,19 @@ module alu
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    
+    always @(*)begin
+        case (ctrl[1:0])
 
+        2'b000 r = a&b // AND
+        2'b000 r = a|b // OR
+        2'b000 r = a+b // ADD
+        2'b000 r = ~(a+b) // NOR
+        2'b001 r = a-b // SUB
+        2'b000 r = a<<b // Shift Left
+        2'b000 r = a>>b // Shift Right
+
+        endcase
+        assign zero=(r==0);
 endmodule
 
 `endif // ALU

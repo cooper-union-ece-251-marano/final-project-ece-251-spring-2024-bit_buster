@@ -24,9 +24,9 @@ module computer
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input  logic           clk, reset, 
+    input  logic clk, rst, 
     output logic [(n-1):0] writedata, dataadr, 
-    output logic           memwrite
+    output logic memwrite
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
@@ -36,11 +36,28 @@ module computer
     // computer internal components
 
     // the RISC CPU
-    cpu mips(clk, reset, pc, instr, memwrite, dataadr, writedata, readdata);
+    cpu mips(
+        clk, 
+        rst, 
+        pc, 
+        instr, 
+        memwrite, 
+        dataadr, 
+        writedata, 
+        readdata
+        );
     // the instruction memory ("text segment") in main memory
-    imem imem(pc[7:2], instr);
+    imem imem(
+        pc[7:2], 
+        instruction
+        );
     // the data memory ("data segment") in main memory
-    dmem dmem(clk, memwrite, dataadr, writedata, readdata);
+    dmem dmem(
+        clk, 
+        memwrite, 
+        dataadr, 
+        writedata, 
+        readdata);
 
 endmodule
 

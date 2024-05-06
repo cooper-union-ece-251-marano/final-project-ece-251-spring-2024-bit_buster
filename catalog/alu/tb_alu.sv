@@ -62,7 +62,7 @@ initial begin
     #10;
     $display("Test OR: a = %h, b = %h, alu_ctrl = %b, result = %h", a, b, alu_ctrl, result);
 
-    // Test XOR
+    // Test NOR
     a = 32'habcdef00;
     b = 32'h00ff00ff;
     alu_ctrl = 3'b100; 

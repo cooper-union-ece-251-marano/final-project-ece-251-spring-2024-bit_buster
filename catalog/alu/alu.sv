@@ -26,14 +26,14 @@ module alu #(parameter n = 32)(
 
 always @(*) begin
   case(alu_ctrl)
-        3'b000: result = a + b;     // Add
-        3'b001: result = a - b;     // Subtract
-        3'b010: result = a & b;     // AND
-        3'b011: result = a | b;     // OR
-        3'b100: result = a ^ b;     // XOR
-        3'b101: result = a << b;    // Shift left
-        3'b110: result = a >> b;    // Shift right 
-        3'b111: begin              // SLT
+        3'b000: result = a + b;         // Add
+        3'b001: result = a - b;         // Subtract
+        3'b010: result = a & b;         // AND
+        3'b011: result = a | b;         // OR
+          3'b100: result = ~(a | b);    // NOR
+        3'b101: result = a << b;        // Shift left
+        3'b110: result = a >> b;        // Shift right 
+        3'b111: begin                   // SLT
                     if (a < b) begin
                         result = 1;
                     end else begin

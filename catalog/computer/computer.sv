@@ -19,7 +19,8 @@
 `include "../imem/imem.sv"
 `include "../dmem/dmem.sv"
 
-module computer #(parameter n = 32)(
+module computer 
+    #(parameter n = 32)(
     
     input  logic           clk, reset, 
     output logic [(n-1):0] writedata, dataadr, 
@@ -30,29 +31,14 @@ module computer #(parameter n = 32)(
 
     // Internal components
 
-    // CPU
-    cpu mips(
-        .clk(clk),
-        .reset(reset),
-        .pc(pc),
-        .instr(instr),
-        .memwrite(memwrite),
-        .dataadr(dataadr),
-        .writedata(writedata),
-        .readdata(readdata)
-    );
+    // RISC CPU
+    cpu mips(clk, reset, pc, instr, memwrite, dataadr, writedata, readdata);
     
     // Instruction memory ("text segment") in main memory
     imem imem(pc[7:2], instr);
    
     // Data memory ("data segment") in main memory
-    dmem dmem(
-        .clk(clk),
-        .memwrite(memwrite),
-        .dataadr(dataadr),
-        .writedata(writedata),
-        .readdata(readdata)
-    );
+    dmem dmem(clk, memwrite, dataadr, writedata, readdata);
 
 endmodule
 `endif // COMPUTER

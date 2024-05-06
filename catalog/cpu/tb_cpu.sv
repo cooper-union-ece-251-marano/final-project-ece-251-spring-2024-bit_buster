@@ -10,63 +10,45 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef TB_CPU
-`define TB_CPU
-
 `timescale 1ns/100ps
 
 module cpu_tb;
 
-    // Parameters
-    parameter N = 32;
+  // Parameters
+  parameter DATA_WIDTH = 32;
+  parameter ADDR_WIDTH = 5;
 
-    // Inputs
-    logic clk, reset;
-    logic [N-1:0] instr;
+  // Inputs
+  logic clk = 0;
+  logic reset = 0;
+  logic [(DATA_WIDTH-1):0] instr = 32'h01234567;
+  logic [(DATA_WIDTH-1):0] readdata = 32'h89ABCDEF;
 
-    // Outputs
-    logic [N-1:0] pc, aluout, writedata, readdata;
-    logic memwrite;
+  // Outputs
+  logic [(DATA_WIDTH-1):0] pc;
+  logic memwrite, aluout;
+  logic [(DATA_WIDTH-1):0] writedata;
 
-    // Instantiate the CPU module
-    cpu #(
-        .n(N)
-    ) uut (
-        .clk(clk),
-        .reset(reset),
-        .pc(pc),
-        .instr(instr),
-        .memwrite(memwrite),
-        .aluout(aluout),
-        .writedata(writedata),
-        .readdata(readdata)
-    );
+  // Instantiate CPU
+  cpu #(DATA_WIDTH) cpu_inst (
+    .clk(clk),
+    .reset(reset),
+    .pc(pc),
+    .instr(instr),
+    .memwrite(memwrite),
+    .aluout(aluout),
+    .writedata(writedata),
+    .readdata(readdata)
+  );
 
-    // Clock generation
-    always #5 clk = ~clk;
+  // Clock generation
+  always #5 clk = ~clk;
 
-    // Reset generation
-    initial begin
-        reset = 1;
-        #10 reset = 0;
-    end
-
-    // Stimulus generation
-    initial begin
-        // Wait for initial reset to complete
-        #20;
-
-        // Send some sample instructions
-        instr = 32'h00001000; // Example instruction
-        #10;
-        instr = 32'h00002000; // Another example instruction
-        #10;
-        // Add more instructions as needed
-
-        // End simulation
-        #100 $finish;
-    end
+  // Reset generation
+  initial begin
+    #20 reset = 1;
+    #10 reset = 0;
+    #100 $finish;
+  end
 
 endmodule
-
-`endif

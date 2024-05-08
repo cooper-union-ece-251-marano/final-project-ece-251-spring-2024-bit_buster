@@ -45,23 +45,46 @@ module tb_regfile;
     // Clock generation
     always #5 clk = ~clk;
 
-    // Testbench stimulus
-    initial begin
-        // Perform write operation
-        we3 = 1;
-        wa3 = 2;
-        wd3 = 32'h12345678;
-        ra1 = 2;
-        ra2 = 3;
-        #10;
-        // Perform read operation
-        we3 = 0;
-        ra1 = 2;
-        ra2 = 3;
-        #10;
-        // End simulation after stimulus
-        $finish;
-    end
+// Test case: Write to register 2, then read from register 2
+initial begin
+    // Write operation
+    we3 = 1;
+    wa3 = 2;
+    wd3 = 32'h12345678;
+    ra1 = 0; // Not used in this case
+    ra2 = 0; // Not used in this case
+    #10;
+
+    // Read operation
+    we3 = 0;
+    ra1 = 2;
+    ra2 = 0; // Not used in this case
+    #10;
+    // Check if read data is correct
+    if (rd1 !== 32'h12345678) $display("Test case failed: Read data mismatch!");
+    #10;
+end
+
+// Test case: Write to register 2, then read from register 3
+initial begin
+    // Write operation
+    we3 = 1;
+    wa3 = 2;
+    wd3 = 32'h87654321; // Different data from the previous test
+    ra1 = 0; // Not used in this case
+    ra2 = 0; // Not used in this case
+    #10;
+
+    // Read operation
+    we3 = 0;
+    ra1 = 2;
+    ra2 = 3;
+    #10;
+    // Check if read data is correct
+    if (rd2 !== 32'h87654321) $display("Test case failed: Read data mismatch!");
+    #10;
+end
+
 
 endmodule
 `endif // TB_REGFILE

@@ -10,28 +10,44 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`define ALU_DECODER
+`ifndef ALUDEC
+`define ALUDEC
 
-`timescale 1ns/1ns
+`timescale 1ns/100ps
 
-module alu_decoder (
-  input logic [2:0] alu_control,
-    output logic [5:0] alu_opcode
-);
-
-
-always_comb begin
-    case (alu_control)
-        3'b000: alu_opcode = 6'b0000; // Add
-        3'b001: alu_opcode = 6'b0001; // Subtract
-        3'b010: alu_opcode = 6'b0010; // AND
-        3'b011: alu_opcode = 6'b0011; // OR
-        3'b100: alu_opcode = 6'b0100; // XOR
-        3'b101: alu_opcode = 6'b0101; // Shift left
-        3'b110: alu_opcode = 6'b0110; // Shift right
-        3'b111: alu_opcode = 6'b0111; // SLT (Set on less than)
-        default: alu_opcode = 6'b0000; // Default to Add
-    endcase
-end
+module aludec
+    #(parameter n = 32, r = 6)(
+    //
+    // ---------------- PORT DEFINITIONS ----------------
+    //
+    input  logic [(r-1):0] funct,
+    input  [1:0] aluop,
+    output reg [2:0] alucontrol
+    );
+    //
+    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
+    //
+    always @* begin
+        case (aluop)
+            2'b00: alucontrol = 3'b010; // addi
+            2'b01: alucontrol = 3'b110; // subi
+            default: begin
+                case (funct)
+                    6'b100000: alucontrol = 3'b011; // add
+                    6'b100010: alucontrol = 3'b100; // sub
+                    6'b100100: alucontrol = 3'b000; // and
+                    6'b100101: alucontrol = 3'b001; // or
+                    6'b100111: alucontrol = 3'b010; // nor
+                    6'b011000: alucontrol = 3'b101; // mult
+                    6'b010000: alucontrol = 3'b101; // move hi
+                    6'b010001: alucontrol = 3'b110; // move lo
+                    6'b101010: alucontrol = 3'b111; // slt
+                    default:   alucontrol = 3'bxxx; // Illegal function
+                endcase
+            end
+        endcase
+    end
 
 endmodule
+
+`endif // ALUDEC

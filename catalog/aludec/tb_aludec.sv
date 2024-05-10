@@ -22,7 +22,7 @@ module alu_decoder_tb;
     logic [5:0] alu_opcode;
 
     // Instantiate 
-    alu_decoder uut(
+    aludec uut(
       .alu_control(alu_control),
         .alu_opcode(alu_opcode)
     );

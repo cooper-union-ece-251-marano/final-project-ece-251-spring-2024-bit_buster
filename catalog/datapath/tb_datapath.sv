@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Grace Tseng <grace.tseng@cooper.edu>
+// Engineer: Grace Tseng
 // 
 //     Create Date: 2024-05-05
 //     Module Name: tb_datapath
@@ -44,13 +44,6 @@ module tb_datapath;
         .writedata(writedata),
         .readdata(readdata)
     );
-    
-    initial begin
-        $dumpfile("datapath.vcd");
-        $dumpvars(0, tb_datapath);
-        // Other initial block content...
-    end
-
 
     // Clock generation
     always #5 clk = ~clk;
@@ -81,7 +74,7 @@ module tb_datapath;
         #1000;
         $finish;
     end
-
+    
     // Stimulus generation
     initial begin
         // Wait for some time
@@ -111,6 +104,29 @@ module tb_datapath;
         instr = 32'b10101010101010101010101010101010;
         #10; // Wait for some cycles
 
+        // Test case 3
+        $display("Test Case 3:");
+        memtoreg = 1;
+        pcsrc = 0;
+        alusrc = 1;
+        regdst = 1;
+        regwrite = 1;
+        jump = 0;
+        alucontrol = 3'b001;
+        instr = 32'b11111111111111111111111111111111;
+        #10; // Wait for some cycles
+
+        // Test case 4
+        $display("Test Case 4:");
+        memtoreg = 0;
+        pcsrc = 0;
+        alusrc = 1;
+        regdst = 1;
+        regwrite = 1;
+        jump = 1;
+        alucontrol = 3'b100;
+        instr = 32'b00000000000000000000000000000000;
+        #10; // Wait for some cycles
 
         // Wait for simulation to finish
         #1000;

@@ -2,7 +2,7 @@
 // The Cooper Union
 // ECE 251 Spring 2024
 // Engineer: Lindsey R
-// Engineer: Grace Tseng <grace.tseng@cooper.edu> (made test cases display)
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
 //     Create Date: 2023-02-07
 //     Module Name: tb_aludec
@@ -11,60 +11,91 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef ALUDEC
-`define ALUDEC
+`ifndef TB_ALUDEC
+`define TB_ALUDEC
 
-`timescale 1ns/1ns
+`timescale 1ns/100ps
 
 module tb_aludec;
 
-    logic [2:0] alu_control;
-    logic [5:0] alu_opcode;
+    // Parameters
+    parameter n = 32;
+    parameter r = 6;s
 
-    // Instantiate 
-    aludec uut(
-        .alucontrol(alu_control),
-        .aluop(alu_opcode)
+    // Inputs
+    logic [(r-1):0] funct;
+    logic [1:0] aluop;
+
+    // Outputs
+    logic [2:0] alucontrol;
+
+    // Instantiate the ALU Decoder
+    aludec #(n, r) uut (
+        .funct(funct),
+        .aluop(aluop),
+        .alucontrol(alucontrol)
     );
 
+    // Stimulus
     initial begin
-        
-    // Test cases
-        alu_control = 3'b000; // Test Add 
+        // Test Case 1: aluop = 00 (addi), funct = 100000 (add)
+        aluop = 2'b00;
+        funct = 6'b100000;
         #10;
-        $display("Test case: Add, alu_control = %b", alu_control);
-        
-        alu_control = 3'b001; // Test Subtract 
+        $display("Test Case 1: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 2: aluop = 01 (subi), funct = 100010 (sub)
+        aluop = 2'b01;
+        funct = 6'b100010;
         #10;
-        $display("Test case: Subtract, alu_control = %b", alu_control);
-        
-        alu_control = 3'b010; // Test AND 
+        $display("Test Case 2: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 3: aluop = 00 (addi), funct = 101010 (slt)
+        aluop = 2'b00;
+        funct = 6'b101010;
         #10;
-        $display("Test case: AND, alu_control = %b", alu_control);
-        
-        alu_control = 3'b011; // Test OR 
+        $display("Test Case 3: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 4: aluop = 00 (addi), funct = 100100 (and)
+        aluop = 2'b00;
+        funct = 6'b100100;
         #10;
-        $display("Test case: OR, alu_control = %b", alu_control);
-        
-        alu_control = 3'b100; // Test XOR 
+        $display("Test Case 4: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 5: aluop = 01 (subi), funct = 100101 (or)
+        aluop = 2'b01;
+        funct = 6'b100101;
         #10;
-        $display("Test case: XOR, alu_control = %b", alu_control);
-        
-        alu_control = 3'b101; // Test Shift left 
+        $display("Test Case 5: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 6: aluop = 00 (addi), funct = 100111 (nor)
+        aluop = 2'b00;
+        funct = 6'b100111;
         #10;
-        $display("Test case: Shift left, alu_control = %b", alu_control);
-        
-        alu_control = 3'b110; // Test Shift right 
+        $display("Test Case 6: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 7: aluop = 01 (subi), funct = 011000 (mult)
+        aluop = 2'b01;
+        funct = 6'b011000;
         #10;
-        $display("Test case: Shift right, alu_control = %b", alu_control);
-        
-        alu_control = 3'b111; // Test Set on less than 
+        $display("Test Case 7: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 8: aluop = 00 (addi), funct = 010000 (move hi)
+        aluop = 2'b00;
+        funct = 6'b010000;
         #10;
-        $display("Test case: Set on less than, alu_control = %b", alu_control);
+        $display("Test Case 8: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
+
+        // Test Case 9: aluop = 01 (subi), funct = 010001 (move lo)
+        aluop = 2'b01;
+        funct = 6'b010001;
+        #10;
+        $display("Test Case 9: aluop = %b, funct = %b, alucontrol = %b", aluop, funct, alucontrol);
 
         // End simulation
         $finish;
     end
 
 endmodule
+
 `endif // ALUDEC

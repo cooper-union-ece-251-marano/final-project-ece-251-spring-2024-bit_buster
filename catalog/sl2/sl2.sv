@@ -26,7 +26,7 @@ module sl2
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign C = { {n{A[(i-1)]}}, A};
+    assign C = {A[29:01],2'b00};
 endmodule
 
 `endif // SL2

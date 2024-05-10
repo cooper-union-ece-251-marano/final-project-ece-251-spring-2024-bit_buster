@@ -45,6 +45,8 @@ module controller
       regwrite, 
       jump, 
       aluop);
+      
+    aludec  ad(funct, aluop, alucontrol);
 
   assign pcsrc = branch & zero;
 

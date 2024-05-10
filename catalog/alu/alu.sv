@@ -42,7 +42,7 @@ module alu
     always_comb begin
         case (alucontrol)
             3'b011: begin // Multiplication
-                next_HiLo = {32'b0, a * b}; // Only update HiLo
+                next_HiLo = {32'b0, a * b}; 
             end
             default: begin 
                 next_HiLo = HiLo;

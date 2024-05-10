@@ -30,8 +30,6 @@ module alu
     logic [2*n-1:0] HiLo, next_HiLo;
 
     assign zero = (result == 32'b0);
-    assign condinvb = alucontrol[2] ? ~b : b;
-    assign sumSlt = a + condinvb + alucontrol[2];
 
     initial begin
         HiLo = {(2*n){1'b0}};

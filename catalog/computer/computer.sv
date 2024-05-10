@@ -1,7 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineers: Grace Tseng <grace.tseng@cooper.edu>
+// Engineers: Lindsey Rodriguez
 // 
 //     Create Date: 2023-02-07
 //     Module Name: computer

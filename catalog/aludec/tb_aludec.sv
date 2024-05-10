@@ -16,15 +16,15 @@
 
 `timescale 1ns/1ns
 
-module alu_decoder_tb;
+module tb_aludec;
 
     logic [2:0] alu_control;
     logic [5:0] alu_opcode;
 
     // Instantiate 
     aludec uut(
-      .alu_control(alu_control),
-        .alu_opcode(alu_opcode)
+        .alucontrol(alu_control),
+        .aluop(alu_opcode)
     );
 
     initial begin

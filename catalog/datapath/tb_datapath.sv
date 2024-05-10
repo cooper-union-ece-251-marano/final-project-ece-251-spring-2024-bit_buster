@@ -44,6 +44,13 @@ module tb_datapath;
         .writedata(writedata),
         .readdata(readdata)
     );
+    
+    initial begin
+        $dumpfile("datapath.vcd");
+        $dumpvars(0, tb_datapath);
+        // Other initial block content...
+    end
+
 
     // Clock generation
     always #5 clk = ~clk;
@@ -75,7 +82,41 @@ module tb_datapath;
         $finish;
     end
 
-    // Add any additional test cases or stimulus here
+    // Stimulus generation
+    initial begin
+        // Wait for some time
+        #100;
+
+        // Test case 1
+        $display("Test Case 1:");
+        memtoreg = 1;
+        pcsrc = 0;
+        alusrc = 1;
+        regdst = 1;
+        regwrite = 1;
+        jump = 0;
+        alucontrol = 3'b010;
+        instr = 32'b01010101010101010101010101010101;
+        #10; // Wait for some cycles
+
+        // Test case 2
+        $display("Test Case 2:");
+        memtoreg = 0;
+        pcsrc = 1;
+        alusrc = 0;
+        regdst = 0;
+        regwrite = 0;
+        jump = 1;
+        alucontrol = 3'b011;
+        instr = 32'b10101010101010101010101010101010;
+        #10; // Wait for some cycles
+
+
+        // Wait for simulation to finish
+        #1000;
+        $finish;
+    end
+
 
 endmodule
 `endif // TB_DATAPATH

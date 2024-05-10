@@ -34,7 +34,7 @@ module alu
     assign sumSlt = a + condinvb + alucontrol[2];
 
     initial begin
-        HiLo = 64'b0;
+        HiLo = {(2*n){1'b0}};
     end
 
     always_comb begin

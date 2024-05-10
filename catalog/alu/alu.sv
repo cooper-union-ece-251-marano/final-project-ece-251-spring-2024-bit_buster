@@ -1,9 +1,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: YOUR NAMES
-// 
-//     Create Date: 2023-02-07
+// Engineers: Grace Tseng <grace.tseng@cooper.edu>
+// Engineers: Lindsey Rodriguez
+//
+//     Create Date: 2024-05-10
 //     Module Name: alu
 //     Description: 32-bit RISC-based CPU alu (MIPS)
 //

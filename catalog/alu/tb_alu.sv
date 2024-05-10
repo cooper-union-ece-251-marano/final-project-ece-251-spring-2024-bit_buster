@@ -2,7 +2,7 @@
 // The Cooper Union
 // ECE 251 Spring 2024
 // Engineers: Grace Tseng <grace.tseng@cooper.edu>
-// Engineers: Lindsey R
+// Engineers: Lindsey Rodriguez
 //
 //     Create Date: 2025-05-10
 //     Module Name: tb_alu

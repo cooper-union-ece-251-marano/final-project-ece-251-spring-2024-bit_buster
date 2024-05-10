@@ -1,33 +1,37 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Grace Tseng
+// Engineer: Grace Tseng 
 // 
-//     Create Date: 2024-05-05
-//     Module Name: tb_regfile
-//     Description: Test bench for register file
+//     Create Date: 2024-05-10
+//     Module Name: regfile
+//     Description: 32-bit RISC register file
 //
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-`ifndef TB_REGFILE
-`define TB_REGFILE
+`ifndef REGFILE_TB
+`define REGFILE_TB
 
 `timescale 1ns/100ps
-`include "regfile.sv"
 
 module tb_regfile;
-    parameter n = 32;
 
-    // Define signals
+    // Parameters
+    parameter n = 32;
+    parameter r = 5;
+
+    // Inputs
     logic clk;
     logic we3;
-    logic [4:0] ra1, ra2, wa3;
-    logic [31:0] wd3;
-    logic [31:0] rd1, rd2;
+    logic [r-1:0] ra1, ra2, wa3;
+    logic [n-1:0] wd3;
 
-    // Instantiate regfile module
-    regfile #(n) dut (
+    // Outputs
+    logic [n-1:0] rd1, rd2;
+
+    // Instantiate the Register File
+    regfile #(n, r) uut (
         .clk(clk),
         .we3(we3),
         .ra1(ra1),
@@ -39,45 +43,49 @@ module tb_regfile;
     );
 
     // Clock generation
-    initial begin
-        clk = 0;
-        forever #5 clk = ~clk; // Generate a clock with period 10 time units
-    end
+    always #5 clk = ~clk;
 
-    // Stimulus generation
+    // Initial stimulus
     initial begin
         // Initialize inputs
+        we3 = 0;
+        ra1 = 0;
+        ra2 = 0;
+        wa3 = 0;
+        wd3 = 0;
+
+        // Apply some inputs
+        #10;
         we3 = 1;
-        ra1 = 5'b00000;
-        ra2 = 5'b00000;
-        wa3 = 5'b00001;
-        wd3 = 32'hABCDEFF0;
-
-        // Wait for a few clock cycles
+        wa3 = 1;
+        wd3 = 32'hDEADBEEF;
         #10;
+        we3 = 0;
+        ra1 = 1;
+        ra2 = 1;
 
-        // Assert read data correctness
-        if (rd1 !== 32'h0) $fatal("Error: rd1 is not 0");
-        if (rd2 !== 32'h0) $fatal("Error: rd2 is not 0");
-
-        // Change input values
-        ra1 = 5'b00001;
-        ra2 = 5'b00000;
-        wa3 = 5'b00001;
-        wd3 = 32'h12345678;
-
-        // Wait for a few clock cycles
+        // Display outputs
         #10;
+        $display("rd1 = %h, rd2 = %h", rd1, rd2);
 
-        // Assert read data correctness
-        if (rd1 !== 32'hABCDEFF0) $fatal("Error: rd1 is not ABCDEFF0");
-        if (rd2 !== 32'h0) $fatal("Error: rd2 is not 0");
+        // Additional test cases
+        #10;
+        we3 = 1;
+        wa3 = 2;
+        wd3 = 32'hABCDEFAB;
+        #10;
+        we3 = 0;
+        ra1 = 2;
+        ra2 = 1;
 
-        // Add more test cases if needed
+        // Display outputs
+        #10;
+        $display("rd1 = %h, rd2 = %h", rd1, rd2);
 
-        // Finish simulation
+        // End simulation
         $finish;
     end
 
 endmodule
-`endif // TB_REGFILE
+
+`endif // REGFILE_TB

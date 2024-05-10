@@ -10,26 +10,24 @@
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
-
 `ifndef TB_REGFILE
 `define TB_REGFILE
 
 `timescale 1ns/100ps
-
 `include "regfile.sv"
 
 module tb_regfile;
+    parameter n = 32;
 
-    // Signals
-    logic clk;                      // Clock signal
-    logic we3;                      // Write enable for register file
-    logic [4:0] ra1, ra2, wa3;      // Read and write addresses
-    logic [31:0] wd3;               // Write data
-    logic [31:0] rd1_exp, rd2_exp;  // Expected read data
-    logic [31:0] rd1, rd2;          // Actual read data
+    // Define signals
+    logic clk;
+    logic we3;
+    logic [4:0] ra1, ra2, wa3;
+    logic [31:0] wd3;
+    logic [31:0] rd1, rd2;
 
-    // Instantiate the register file
-    regfile rf (
+    // Instantiate regfile module
+    regfile #(n) dut (
         .clk(clk),
         .we3(we3),
         .ra1(ra1),
@@ -41,51 +39,45 @@ module tb_regfile;
     );
 
     // Clock generation
-    always #5 clk = ~clk;
-
-    // Initialize signals
     initial begin
         clk = 0;
-        we3 = 1; // Enable writing to the register file
-        ra1 = 5; // Read address 1
-        ra2 = 10; // Read address 2
-        wa3 = 3; // Write address
-        wd3 = 32'hABCD1234; // Write data
-        rd1_exp = 32'h00000000; // Expected read data for address 5
-        rd2_exp = 32'h00000000; // Expected read data for address 10
+        forever #5 clk = ~clk; // Generate a clock with period 10 time units
+    end
 
-        // Wait for some time
+    // Stimulus generation
+    initial begin
+        // Initialize inputs
+        we3 = 1;
+        ra1 = 5'b00000;
+        ra2 = 5'b00000;
+        wa3 = 5'b00001;
+        wd3 = 32'hABCDEFF0;
+
+        // Wait for a few clock cycles
         #10;
 
-        // Display initial state
-        $display("Initial state:");
-        $display("Read Address 1: %d, Read Address 2: %d, Write Address: %d", ra1, ra2, wa3);
-        $display("Write Data: %h", wd3);
+        // Assert read data correctness
+        if (rd1 !== 32'h0) $fatal("Error: rd1 is not 0");
+        if (rd2 !== 32'h0) $fatal("Error: rd2 is not 0");
 
-        // Provide some time for the register file to update
-        #20;
+        // Change input values
+        ra1 = 5'b00001;
+        ra2 = 5'b00000;
+        wa3 = 5'b00001;
+        wd3 = 32'h12345678;
 
-        // Read data from the register file
-        rd1 = rf.rd1;
-        rd2 = rf.rd2;
+        // Wait for a few clock cycles
+        #10;
 
-        // Check if read data matches expected values
-        if (rd1 !== rd1_exp) begin
-            $display("Test case failed: Read data mismatch for Read Address 1!");
-        end else begin
-            $display("Test case passed: Read data matched for Read Address 1.");
-        end
+        // Assert read data correctness
+        if (rd1 !== 32'hABCDEFF0) $fatal("Error: rd1 is not ABCDEFF0");
+        if (rd2 !== 32'h0) $fatal("Error: rd2 is not 0");
 
-        if (rd2 !== rd2_exp) begin
-            $display("Test case failed: Read data mismatch for Read Address 2!");
-        end else begin
-            $display("Test case passed: Read data matched for Read Address 2.");
-        end
+        // Add more test cases if needed
 
         // Finish simulation
         $finish;
     end
 
 endmodule
-
 `endif // TB_REGFILE

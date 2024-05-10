@@ -28,7 +28,7 @@ module alu
 );
 
     logic [n-1:0] condinvb, sum, tot;
-    logic [2*n-1:0] HiLo, next_HiLo;
+    logic [2*n-1:0] HiLo, next;
 
     assign zero = (result == 32'b0);
 
@@ -39,10 +39,10 @@ module alu
     always_comb begin
         case (alucontrol)
             3'b011: begin // Multiplication
-                next_HiLo = {32'b0, a * b}; 
+                next = {32'b0, a * b}; 
             end
             default: begin 
-                next_HiLo = HiLo;
+                next = HiLo;
             end
         endcase
     end
@@ -76,10 +76,10 @@ module alu
         endcase
     end
 
-    // Update HiLo at every positive clock edge if there is a change
+    // Update HiLo
     always_ff @(posedge clk) begin
         if (alucontrol == 3'b011) begin
-            HiLo <= next_HiLo; // Update HiLo only on multiplication
+            HiLo <= next; // Update HiLo only on multiplication
         end
     end
 

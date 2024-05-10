@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace
 // 
 //     Create Date: 2023-02-07
 //     Module Name: cpu
@@ -38,16 +38,35 @@ module cpu
     logic       memtoreg, alusrc, regdst, regwrite, jump, pcsrc, zero;
     logic [2:0] alucontrol;
     
-    controller c(instr[(31):26], instr[5:0], zero,
-                    memtoreg, memwrite, pcsrc,
-                    alusrc, regdst, regwrite, jump,
-                    alucontrol);
+    controller c(
+        instr[(31):26],
+        instr[5:0], 
+        zero, 
+        memtoreg, 
+        memwrite, 
+        pcsrc,
+        alusrc, 
+        regdst,
+        regwrite, 
+        jump,
+        alucontrol);
 
-    datapath dp(clk, reset, memtoreg, pcsrc,
-                    alusrc, regdst, regwrite, jump,
-                    alucontrol,
-                    zero, pc, instr,
-                    aluout, writedata, readdata);
+    datapath dp(
+        clk, 
+        reset, 
+        memtoreg, 
+        pcsrc,
+        alusrc, 
+        regdst, 
+        regwrite, 
+        jump,
+        alucontrol,
+        zero, 
+        pc, 
+        instr,
+        aluout, 
+        writedata, 
+        readdata);
 
 endmodule
 

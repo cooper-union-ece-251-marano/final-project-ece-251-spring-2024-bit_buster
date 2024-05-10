@@ -28,7 +28,7 @@ logic fZ;
 alu #(.n(N)) uut (
     .a(a),
     .b(b),
-    .alu_ctrl(alu_ctrl),
+    .alucontrol(alu_ctrl),
     .result(result),
     .fZ(fZ)
 );

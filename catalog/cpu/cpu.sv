@@ -18,10 +18,11 @@
 `include "../controller/controller.sv"
 `include "../datapath/datapath.sv"
 
-module cpu #(
-    parameter n = 32
-)(
-   
+module cpu
+    #(parameter n = 32)(
+    //
+    // ---------------- PORT DEFINITIONS ----------------
+    //
     input  logic           clk, reset,
     output logic [(n-1):0] pc,
     input  logic [(n-1):0] instr,
@@ -29,44 +30,24 @@ module cpu #(
     output logic [(n-1):0] aluout, writedata,
     input  logic [(n-1):0] readdata
 );
-    
-    // Internal signals for CPU components
-    logic memtoreg, alusrc, regdst, regwrite, jump, pcsrc, zero;
+    //
+    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
+    //
+
+    // cpu internal components
+    logic       memtoreg, alusrc, regdst, regwrite, jump, pcsrc, zero;
     logic [2:0] alucontrol;
+    
+    controller c(instr[(31):26], instr[5:0], zero,
+                    memtoreg, memwrite, pcsrc,
+                    alusrc, regdst, regwrite, jump,
+                    alucontrol);
 
-    // Controller instantiation
-    controller #(.n(n)) c(
-        .opcode(instr[31:26]),
-        .funct(instr[5:0]),
-        .zero(zero),
-        .memtoreg(memtoreg),
-        .memwrite(memwrite),
-        .pcsrc(pcsrc),
-        .alusrc(alusrc),
-        .regdst(regdst),
-        .regwrite(regwrite),
-        .jump(jump),
-        .alucontrol(alucontrol)
-    );
-
-    // Datapath instantiation
-    datapath #(.n(n)) dp(
-        .clk(clk),
-        .reset(reset),
-        .memtoreg(memtoreg),
-        .pcsrc(pcsrc),
-        .alusrc(alusrc),
-        .regdst(regdst),
-        .regwrite(regwrite),
-        .jump(jump),
-        .alucontrol(alucontrol),
-        .zero(zero),
-        .pc(pc),
-        .instr(instr),
-        .aluout(aluout),
-        .writedata(writedata),
-        .readdata(readdata)
-    );
+    datapath dp(clk, reset, memtoreg, pcsrc,
+                    alusrc, regdst, regwrite, jump,
+                    alucontrol,
+                    zero, pc, instr,
+                    aluout, writedata, readdata);
 
 endmodule
 

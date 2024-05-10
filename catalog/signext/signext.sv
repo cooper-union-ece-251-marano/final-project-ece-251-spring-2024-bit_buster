@@ -23,7 +23,7 @@ module signext
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign C = {{(31){A[15]}}, A}; // rewritten
+    assign C = {{(16){A[15]}}, A}; // rewritten
 endmodule
 
 `endif // SIGNEXT

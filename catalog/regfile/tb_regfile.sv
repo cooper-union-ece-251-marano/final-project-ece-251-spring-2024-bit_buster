@@ -1,37 +1,35 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: YOUR NAMES
+// Engineer: Grace Tseng
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: tb_regfile
-//     Description: Test bench for simple behavorial register file
+//     Description: Test bench for register file
 //
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
+
 `ifndef TB_REGFILE
 `define TB_REGFILE
 
 `timescale 1ns/100ps
 
+`include "regfile.sv"
+
 module tb_regfile;
 
-    // Parameters
-    parameter DATA_WIDTH = 32;
-    parameter ADDR_WIDTH = 5;
+    // Signals
+    logic clk;                      // Clock signal
+    logic we3;                      // Write enable for register file
+    logic [4:0] ra1, ra2, wa3;      // Read and write addresses
+    logic [31:0] wd3;               // Write data
+    logic [31:0] rd1_exp, rd2_exp;  // Expected read data
+    logic [31:0] rd1, rd2;          // Actual read data
 
-    // Inputs
-    logic clk = 0;
-    logic we3 = 1;
-    logic [ADDR_WIDTH-1:0] ra1, ra2, wa3;
-    logic [DATA_WIDTH-1:0] wd3;
-
-    // Outputs
-    logic [DATA_WIDTH-1:0] rd1, rd2;
-
-    // Instantiate regfile
-    regfile #(.n(DATA_WIDTH), .r(ADDR_WIDTH)) dut (
+    // Instantiate the register file
+    regfile rf (
         .clk(clk),
         .we3(we3),
         .ra1(ra1),
@@ -45,46 +43,49 @@ module tb_regfile;
     // Clock generation
     always #5 clk = ~clk;
 
-// Test case: Write to register 2, then read from register 2
-initial begin
-    // Write operation
-    we3 = 1;
-    wa3 = 2;
-    wd3 = 32'h12345678;
-    ra1 = 0; // Not used in this case
-    ra2 = 0; // Not used in this case
-    #10;
+    // Initialize signals
+    initial begin
+        clk = 0;
+        we3 = 1; // Enable writing to the register file
+        ra1 = 5; // Read address 1
+        ra2 = 10; // Read address 2
+        wa3 = 3; // Write address
+        wd3 = 32'hABCD1234; // Write data
+        rd1_exp = 32'h00000000; // Expected read data for address 5
+        rd2_exp = 32'h00000000; // Expected read data for address 10
 
-    // Read operation
-    we3 = 0;
-    ra1 = 2;
-    ra2 = 0; // Not used in this case
-    #10;
-    // Check if read data is correct
-    if (rd1 !== 32'h12345678) $display("Test case failed: Read data mismatch!");
-    #10;
-end
+        // Wait for some time
+        #10;
 
-// Test case: Write to register 2, then read from register 3
-initial begin
-    // Write operation
-    we3 = 1;
-    wa3 = 2;
-    wd3 = 32'h87654321; // Different data from the previous test
-    ra1 = 0; // Not used in this case
-    ra2 = 0; // Not used in this case
-    #10;
+        // Display initial state
+        $display("Initial state:");
+        $display("Read Address 1: %d, Read Address 2: %d, Write Address: %d", ra1, ra2, wa3);
+        $display("Write Data: %h", wd3);
 
-    // Read operation
-    we3 = 0;
-    ra1 = 2;
-    ra2 = 3;
-    #10;
-    // Check if read data is correct
-    if (rd2 !== 32'h87654321) $display("Test case failed: Read data mismatch!");
-    #10;
-end
+        // Provide some time for the register file to update
+        #20;
 
+        // Read data from the register file
+        rd1 = rf.rd1;
+        rd2 = rf.rd2;
+
+        // Check if read data matches expected values
+        if (rd1 !== rd1_exp) begin
+            $display("Test case failed: Read data mismatch for Read Address 1!");
+        end else begin
+            $display("Test case passed: Read data matched for Read Address 1.");
+        end
+
+        if (rd2 !== rd2_exp) begin
+            $display("Test case failed: Read data mismatch for Read Address 2!");
+        end else begin
+            $display("Test case passed: Read data matched for Read Address 2.");
+        end
+
+        // Finish simulation
+        $finish;
+    end
 
 endmodule
+
 `endif // TB_REGFILE

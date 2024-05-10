@@ -18,19 +18,19 @@
 module alu #(parameter n = 32)(
     input logic [n-1:0] a,          
     input logic [n-1:0] b,          
-  input logic [2:0] alu_ctrl,    
+  input logic [2:0] alucontrol,    
 
     output logic [n-1:0] result, 
     output logic fZ              // zero flag
 );
 
 always @(*) begin
-  case(alu_ctrl)
+  case(alucontrol)
         3'b000: result = a + b;         // Add
         3'b001: result = a - b;         // Subtract
         3'b010: result = a & b;         // AND
         3'b011: result = a | b;         // OR
-          3'b100: result = ~(a | b);    // NOR
+        3'b100: result = ~(a | b);    // NOR
         3'b101: result = a << b;        // Shift left
         3'b110: result = a >> b;        // Shift right 
         3'b111: begin                   // SLT

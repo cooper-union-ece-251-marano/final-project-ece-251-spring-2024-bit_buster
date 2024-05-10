@@ -3,52 +3,60 @@
 // ECE 251 Spring 2024
 // Engineer: YOUR NAMES
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: tb_cpu
-//     Description: Test bench for cpu
+//     Description: Test bench for CPU
 //
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
+`ifndef TB_CPU
+`define TB_CPU
+
 `timescale 1ns/100ps
+`include "cpu.sv"
 
-module cpu_tb;
+module tb_cpu;
+    parameter n = 32;
 
-  // Parameters
-  parameter DATA_WIDTH = 32;
-  parameter ADDR_WIDTH = 5;
+    // Inputs
+    logic clk, reset;
+    logic [n-1:0] instr;
+    logic memwrite;
+    logic [n-1:0] readdata;
 
-  // Inputs
-  logic clk = 0;
-  logic reset = 0;
-  logic [(DATA_WIDTH-1):0] instr = 32'h01234567;
-  logic [(DATA_WIDTH-1):0] readdata = 32'h89ABCDEF;
+    // Outputs
+    logic [n-1:0] pc;
+    logic [n-1:0] aluout;
+    logic [n-1:0] writedata;
 
-  // Outputs
-  logic [(DATA_WIDTH-1):0] pc;
-  logic memwrite, aluout;
-  logic [(DATA_WIDTH-1):0] writedata;
+    // Instantiate CPU
+    cpu #(n) cpu_inst (
+        .clk(clk),
+        .reset(reset),
+        .pc(pc),
+        .instr(instr),
+        .memwrite(memwrite),
+        .aluout(aluout),
+        .writedata(writedata),
+        .readdata(readdata)
+    );
 
-  // Instantiate CPU
-  cpu #(DATA_WIDTH) cpu_inst (
-    .clk(clk),
-    .reset(reset),
-    .pc(pc),
-    .instr(instr),
-    .memwrite(memwrite),
-    .aluout(aluout),
-    .writedata(writedata),
-    .readdata(readdata)
-  );
+    // Clock generation
+    initial begin
+        clk = 1'b0;
+        forever #5 clk = ~clk;
+    end
 
-  // Clock generation
-  always #5 clk = ~clk;
+    // Stimulus generation and monitoring
+    initial begin
+        // Provide stimulus values
+        // Assign values to clk, reset, instr, memwrite, and readdata
 
-  // Reset generation
-  initial begin
-    #20 reset = 1;
-    #10 reset = 0;
-    #100 $finish;
-  end
+        // Monitor outputs
+        $monitor("Time=%0t, PC=%h, ALUout=%h, Writedata=%h", $time, pc, aluout, writedata);
+    end
 
 endmodule
+
+`endif // TB_CPU

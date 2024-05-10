@@ -16,7 +16,7 @@
 `timescale 1ns/100ps
 
 module sl2
-    #(parameter n = 32)(
+    #(parameter n = 32, i =16)(
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
@@ -26,7 +26,7 @@ module sl2
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign C = {A << 2, 2'b00};
+    assign C = { {n{A[(i-1)]}}, A};
 endmodule
 
 `endif // SL2

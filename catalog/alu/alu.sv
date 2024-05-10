@@ -26,10 +26,8 @@ module alu
     output logic zero
 );
 
-    logic [n-1:0] condinvb, sum;
-    logic [2*n-1:0] HiLo;
-    logic [n-1:0] tot;
-    logic [2*n-1:0] next_HiLo;
+    logic [n-1:0] condinvb, sum, tot;
+    logic [2*n-1:0] HiLo, next_HiLo;
 
     assign zero = (result == 32'b0);
     assign condinvb = alucontrol[2] ? ~b : b;

@@ -6,10 +6,10 @@ We made a 32-bit RISC single-cycle MIPS processor, meaning all operations take t
 Although a few components do not function as intended/compile, most of our hard work on the other components made them function properly.  Please show mercy, we were both on MacOS so we had so many issues running Verilog and GTKwave.  We attended office hours and asked for help when we could from our peers and our professor. A for effort.
 
 # The four key principles were kept in mind when designing the CPU
-• Smaller is faster. 
-• Simplicity favors regularity.
-• Make the common case fast. 
-• Good design demands good compromise.
+• Smaller is faster. <br />
+• Simplicity favors regularity. <br />
+• Make the common case fast. <br />
+• Good design demands good compromise.<br />
 
 # R-Type
 Register-type instructions are used for register-based ALU operations, where the results are stored in a register file.

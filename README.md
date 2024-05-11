@@ -23,7 +23,7 @@ Jump instructions is to jump to immediate addresses, used to load immediate valu
 ![Screenshot 2024-05-11 155537](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/dd6cb374-cdd0-4a39-ad53-d28d0ca5de99)
 
 # Green Card
-![Screenshot 2024-05-11 155311](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/c4fc0bec-1fb5-48b1-a9fc-8f4cd468f495)
+![Screenshot 2024-05-11 160031](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/ec3b878b-f2ab-449d-8929-8d568cccf275)
 
 ![Screenshot 2024-05-11 155326](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/01615d33-3662-4ebc-9a87-b050f51cae60)
 

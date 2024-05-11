@@ -20,7 +20,7 @@ Immediate type instructions are load/store or branch operations, used when input
 # J-Type
 Jump instructions is to jump to immediate addresses, used to load immediate values into PC. 
 
-![Screenshot 2024-05-11 155156](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/7a337a90-0d45-435a-9b28-44b4eb050d80)
+![Screenshot 2024-05-11 155537](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/dd6cb374-cdd0-4a39-ad53-d28d0ca5de99)
 
 # Green Card
 ![Screenshot 2024-05-11 155311](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/c4fc0bec-1fb5-48b1-a9fc-8f4cd468f495)

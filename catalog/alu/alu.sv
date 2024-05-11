@@ -27,7 +27,7 @@ module alu
     output logic zero
 );
 
-    logic [n-1:0] condinvb, sum, tot;
+    logic [n-1:0] sum, tot;
     logic [2*n-1:0] HiLo, next;
 
     assign zero = (result == 32'b0);
@@ -36,51 +36,49 @@ module alu
         HiLo = {(2*n){1'b0}};
     end
 
-    always_comb begin
+    always_ff @(posedge clk) begin
         case (alucontrol)
             3'b011: begin // Multiplication
-                next = {32'b0, a * b}; 
+                next <= {32'b0, a * b}; 
             end
             default: begin 
-                next = HiLo;
+                next <= HiLo;
             end
         endcase
     end
 
-    always_comb begin
+    always_ff @(posedge clk) begin
         case (alucontrol)
             3'b000: begin // Bitwise AND
-                result = a & b;
+                result <= a & b;
             end
             3'b001: begin // Bitwise OR
-                result = a | b;
+                result <= a | b;
             end
             3'b010: begin // Addition
-                result = a + b;
+                result <= a + b;
             end
             3'b100: begin // Move From LO
-                result = HiLo[n-1:0];
+                result <= HiLo[n-1:0];
             end
             3'b101: begin // Move From HI
-                result = HiLo[2*n-1:n];
+                result <= HiLo[2*n-1:n];
             end
             3'b110: begin // Subtraction
-                result = tot;
+                result <= tot;
             end
             3'b111: begin // Set on Less Than
-                result = tot[n-1];
+                result <= tot[n-1];
             end
             default: begin // Default case
-                result = 32'b0;
+                result <= 32'b0;
             end
         endcase
     end
 
-    // Update HiLo
+
     always_ff @(posedge clk) begin
-        if (alucontrol == 3'b011) begin
-            HiLo <= next; // Update HiLo only on multiplication
-        end
+        HiLo <= (alucontrol == 3'b011) ? next : HiLo;
     end
 
 endmodule

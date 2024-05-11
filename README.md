@@ -22,6 +22,14 @@ Jump instructions is to jump to immediate addresses, used to load immediate valu
 
 ![Screenshot 2024-05-11 155156](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/7a337a90-0d45-435a-9b28-44b4eb050d80)
 
+# Green Card
+![Screenshot 2024-05-11 155311](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/c4fc0bec-1fb5-48b1-a9fc-8f4cd468f495)
+
+![Screenshot 2024-05-11 155326](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/01615d33-3662-4ebc-9a87-b050f51cae60)
+
+# ISA
+![Screenshot 2024-05-11 155322](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/b7e8d77e-e11f-4cec-bd1f-6710b90d8ff9)
+
 ## Compilation and Simulation
 To compile then simulate:
 ### Linux, MacOS

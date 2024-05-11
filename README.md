@@ -30,6 +30,8 @@ Jump instructions is to jump to immediate addresses, used to load immediate valu
 # ISA
 ![Screenshot 2024-05-11 160031](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/f161e84b-900c-4b19-ae63-083547e30225)
 
+# Timing Diagram
+![Screenshot 2024-05-11 175238](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/3135f4b4-28cf-4ff5-b35d-94863783e8f4)
 
 ## Compilation and Simulation
 To compile then simulate:

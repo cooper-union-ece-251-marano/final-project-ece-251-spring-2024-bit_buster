@@ -58,13 +58,13 @@ module alu
             3'b010: begin // Addition
                 result <= a + b;
             end
-            3'b100: begin // Move From LO
+            3'b100: begin 
                 result <= osc[n-1:0];
             end
-            3'b101: begin // Move From HI
+            3'b101: begin 
                 result <= osc[2*n-1:n];
             end
-            3'b110: begin // Subtraction
+            3'b110: begin // Sub
                 result <= tot;
             end
             3'b111: begin // Set on Less Than

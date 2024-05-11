@@ -31,10 +31,6 @@ Jump instructions is to jump to immediate addresses, used to load immediate valu
 ![Screenshot 2024-05-11 160031](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/f161e84b-900c-4b19-ae63-083547e30225)
 
 # Timing Diagram
-Program_exe:
-![Screenshot 2024-05-11 175238](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/3135f4b4-28cf-4ff5-b35d-94863783e8f4)
-
-Factorial_exe:
 ![Screenshot 2024-05-11 181103](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/8c09a32d-4818-4b51-be46-0ca2656971a1)
 
 ## Compilation and Simulation

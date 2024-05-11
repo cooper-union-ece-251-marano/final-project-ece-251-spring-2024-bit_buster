@@ -3,7 +3,6 @@
 # Overview
 We made a 32-bit RISC single-cycle MIPS processor, meaning all operations take the same amount of time determined by a clock cycle. Memory resides in the CPU, and is split into instruction and data memory. The instruction memory is executable and reads addresses into memory. Instructions need the PC to be incremented by 4 bits from an adder, and the data memory is where memory is written into. Controllers dictate the flow of information in the CPU, while the datapath is used to perform operations like ALU and register files. The ALU performs arithmetic, logic, and shift operations including add, sub, and, or, nor, shift right, shift left, and set less than operation. The regfile is an array of registers used to stage data temporarily. 
 
-Although a few components do not function as intended/compile, most of our hard work on the other components made them function properly.  Please show mercy, we were both on MacOS so we had so many issues running Verilog and GTKwave.  We attended office hours and asked for help when we could from our peers and our professor. A for effort.
 ![Screenshot 2024-05-11 155537](https://github.com/cooper-union-ece-251-marano/final-project-ece-251-spring-2024-bit_buster/assets/113416293/dd6cb374-cdd0-4a39-ad53-d28d0ca5de99)
 # The four key principles were kept in mind when designing the CPU
 • Smaller is faster. <br />

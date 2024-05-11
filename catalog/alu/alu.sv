@@ -28,12 +28,12 @@ module alu
 );
 
     logic [n-1:0] sum, tot;
-    logic [2*n-1:0] HiLo, next;
+    logic [2*n-1:0] osc, next;
 
     assign zero = (result == 32'b0);
 
     initial begin
-        HiLo = {(2*n){1'b0}};
+        osc = {(2*n){1'b0}};
     end
 
     always_ff @(posedge clk) begin
@@ -42,7 +42,7 @@ module alu
                 next <= {32'b0, a * b}; 
             end
             default: begin 
-                next <= HiLo;
+                next <= osc;
             end
         endcase
     end
@@ -59,10 +59,10 @@ module alu
                 result <= a + b;
             end
             3'b100: begin // Move From LO
-                result <= HiLo[n-1:0];
+                result <= osc[n-1:0];
             end
             3'b101: begin // Move From HI
-                result <= HiLo[2*n-1:n];
+                result <= osc[2*n-1:n];
             end
             3'b110: begin // Subtraction
                 result <= tot;
@@ -78,7 +78,7 @@ module alu
 
 
     always_ff @(posedge clk) begin
-        HiLo <= (alucontrol == 3'b011) ? next : HiLo;
+        osc <= (alucontrol == 3'b011) ? next : osc;
     end
 
 endmodule

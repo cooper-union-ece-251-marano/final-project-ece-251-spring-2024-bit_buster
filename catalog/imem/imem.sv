@@ -29,7 +29,7 @@ module imem #(
 
     // Initialize Memory with Values from File
     initial begin
-        $readmemh("mult-prog_exe", RAM);
+        $readmemh("factorial_exe", RAM);
     end
 
     // Assign Output Data from Memory

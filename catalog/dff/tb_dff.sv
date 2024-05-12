@@ -1,9 +1,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu> (from HW2)
+//
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-01
 //     Module Name: tb_dff
 //     Description: Test bench for 32 bit D flip flop
 //
@@ -18,40 +19,51 @@
 `include "../clock/clock.sv"
 
 module tb_dff;
-    parameter n = 32; // #bits for an operand
-    wire clk;
-    logic enable;
-    logic reset;
-    logic [(n-1):0] d;
-    logic [(n-1):0] q;
+    parameter n = 32;      // Testing an 32-bit dff
+    logic clk, reset;       // Clock and reset 
+    logic [n-1:0] q;         // Data input for the DFF
+    logic [n-1:0] qn;       // Output from the DFF
 
-   initial begin
-        $dumpfile("dff.vcd");
-        $dumpvars(0, uut0, uut1);
-        //$monitor("d = %b (0x%0h)(%0d) q = %b (0x%0h)(%0d) ", d,d,d,q,q,q);
-        $monitor("time=%0t \t d=%h q=%h",$realtime, d, q);
-    end
+    // UUT
+    dff #(.n(n)) uut (
+        .clk(clk),
+        .reset(reset),
+        .q(q),
+        .qn(qn)
+    );
 
+    // Clock generation process
+    initial clk = 0;
+    always #5 clk = ~clk;  // Generate a clock of 100MHz
+
+    // Test 
     initial begin
-        d <= #n'h8000;
-        enable <= 0;
-        #10 enable <= 1;
-        #10 reset <= 1;
-        #20 d <= #n'h0001;
-        #10 reset <= 0;
-        #10 reset <=0;
-        #20 d <= #n'h0001;
-        #100 enable <= 0;
-        $finish;        
+        // Initialize signals
+        reset = 1;          // Start with reset high
+        q = 0;              // Data is 0
+        #10;                // Wait
+        
+        // Deassert reset and loop through all possible data combinations
+        reset = 0;  
+        for (int i = 0; i < 2**n; i = i + 1) begin
+            q = i;  
+            #10;            // Wait for the next positive edge
+        end
+        
+        // Assert and deassert reset
+        #10 reset = 1;      // Assert reset
+        #10 reset = 0;      // Deassert reset
+
+        // Finish simulation
+        #20 $finish;
     end
 
-    dff uut0(
-        .CLOCK(clk), .RESET(reset), .D(d), .Q(q)
-    );
+    // Monitor output
+    initial begin
+        $dumpfile("tb_dff.vcd");  // name of dump file for waveform gen
+        $dumpvars(0, tb_dff);     // dump vars in the tb
+        $monitor("Time = %0t, reset = %b, q = %b, qn = %b", $time, reset, q, qn);
+    end
 
-   clock uut1(
-        .ENABLE(enable),
-        .CLOCK(clk)
-    );
 endmodule
-`endif // TB_DFF
+`endif

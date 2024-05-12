@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-01
 //     Module Name: tb_mux2
 //     Description: Test bench for 2 to 1 multiplexer
 //
@@ -18,38 +18,45 @@
 `include "../clock/clock.sv"
 
 module tb_mux2;
-    parameter n = 32; // #bits for an operand
-    logic s;
-    logic [(n-1):0] d0, d1;
-    logic [(n-1):0] y;
-    wire clk;
-    logic enable;
+    parameter n = 32;  // 32 bit MUX
+    logic [n-1:0] A, B;
+    logic sel; 
+    logic [n-1:0] C;
+
+   // UUT instantiation
+   mux2 #(.n(n)) uut(.A(A), .B(B), .sel(sel), .C(C));
 
 
-   initial begin
-        $dumpfile("mux2.vcd");
-        $dumpvars(0, uut0, uut1);
-        // $monitor("s = %0b d0 = (0x%0h)(%0d) d1 = (0x%0h)(%0d) y = (0x%0h)(%0d)", s, d0, d0, d1, d1, y, y);
-        $monitor("time=%0t \t enable=%0b s=%0b y=%h d0=%h d1=%h",$realtime, enable, s, y, d0, d1);
-    end
-
+    // Start test
     initial begin
-        d0 <= #n'h80000000;
-        d1 <= #n'h00000001;
-        enable <= 0;
-        #10 enable <= 1;
-        #10 s <= 1'b0;
-        #20 s <= 1'b1;
-        #100 enable <= 0;
+        $dumpfile("tb_mux_2.vcd"); 
+        $dumpvars(0, tb_mux2);    
+
+        // Test case 1: set select low, input passed to output y
+        sel = 0; A = 8'b10101010; B = 8'b01010101; #10;
+
+        // Test case 2: set select high, input b passed to output y
+        sel = 1; #10;
+
+        // Test case 3: set select low, input a with different value
+        sel = 0; A = 8'b11110000; B = 8'b00001111; #10;
+
+        // Test case 4: set select high, input b with different value
+        sel = 1; #10;
+
+        // Test case 5: set select low, input a and b with complementary values
+        sel = 0; A = 8'b11001100; B = ~A; #10;
+
         $finish;
     end
 
-    mux2 uut0(
-        .S(s), .D0(d0), .D1(d1), .Y(y)
-    );
-    clock uut1(
-        .ENABLE(enable),
-        .CLOCK(clk)
-    );
+    // was going to include test number bc hard to read, but no time :(
+    int test_number = 1;
+
+    // Monitor output, made %0s intentionally so number wouldn't appear
+    initial $monitor("Test%0s: Time=%0t A=%b B=%b sel=%b C=%b", test_number, $time, A, B, sel, C);
+
+
+
 endmodule
 `endif // TB_MUX2

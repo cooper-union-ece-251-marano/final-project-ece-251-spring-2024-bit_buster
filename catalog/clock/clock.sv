@@ -1,15 +1,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
+// Engineer:
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-01
 //     Module Name: clock
 //     Description: Clock generator; duty cycle = 50%
 //
 // Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
+// AUTHOR: PROF MARANO 
+
 `ifndef CLOCK
 `define CLOCK
 

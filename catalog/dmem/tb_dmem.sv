@@ -1,13 +1,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: tb_dmem
 //     Description: Test bench for data memory
 //
-// Revision: 1.0
+// Revision: 1.1
 //
 //////////////////////////////////////////////////////////////////////////////////
 `ifndef TB_DMEM
@@ -45,6 +45,19 @@ module tb_dmem;
         #20 dmem_addr <= #(r)'b000010;
         #20 writedata = #(n)'h00000000;
         #20 write_enable <= 1;
+        #20 write_enable <= 0;
+
+        // Additional test cases
+        #20 dmem_addr <= #(r)'b000001;
+        #20 writedata = #(n)'h12345678; // Write new data to an existing address
+        #20 write_enable <= 1;
+        #20 write_enable <= 0;
+
+        #20 dmem_addr <= #(r)'b100000;
+        #20 write_enable <= 1; // Attempt to write to an out-of-bounds address
+        #20 write_enable <= 0;
+
+        #20 dmem_addr <= #(r)'b111111;
         #20 write_enable <= 0;
         #20 $finish;
     end

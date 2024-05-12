@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
-//     Create Date: 2023-02-07
+//     Create Date: 2024-05-05
 //     Module Name: tb_imem
 //     Description: Test bench for instruction memory
 //
@@ -17,29 +17,38 @@
 `include "imem.sv"
 
 module tb_imem;
-    parameter n = 32; // bit length of registers/memory
-    parameter r = 6; // we are only addressing 64=2**6 mem slots in imem
-    logic [(n-1):0] readdata;
-    logic [(r-1):0] imem_addr;
 
-   initial begin
-        $dumpfile("imem.vcd");
-        $dumpvars(0, uut);
-        //$monitor("enable = %b clk = %b", enable, clk);
-        $monitor("time=%0t \t imem_addr=%b readdata=%h",$realtime, imem_addr, readdata);
+parameter int n = 32; // Bit length of registers/memory
+parameter int r = 6;  // Address width (64=2**6 memory slots in imem)
+
+logic [n-1:0] readdata;
+logic [r-1:0] imem_addr;
+
+// Test Bench Initialization
+initial begin
+    $dumpfile("imem.vcd");
+    $dumpvars(0, uut);
+    $monitor("time=%0t \t imem_addr=%b readdata=%h", $realtime, imem_addr, readdata);
+
+    // Sequential Test Cases
+    repeat (4) begin
+        #10 imem_addr = {$random} % (1 << r); // Random Address Generation
     end
 
-    initial begin
-        #10 imem_addr <= #(r)'b000000;
-        #10 imem_addr <= #(r)'b000001;
-        #10 imem_addr <= #(r)'b000010;
-        $finish;
-    end
+    // Finish Simulation
+    #100;
+    $finish;
+end
 
-   imem uut(
-        .addr(imem_addr),
-        .readdata(readdata)
-    );
+// Instantiate Instruction Memory Module
+imem #(
+    .n(n),
+    .r(r)
+) uut (
+    .addr(imem_addr),
+    .readdata(readdata)
+);
+
 endmodule
 
 `endif // TB_IMEM

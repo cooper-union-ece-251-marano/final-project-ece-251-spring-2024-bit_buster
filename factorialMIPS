@@ -1,0 +1,26 @@
+# Prep stack and save necessary registers
+addi $sp, $sp, -8      # Allocate space on stack
+sw $a0, 4($sp)         # Store $a0
+sw $ra, 0($sp)         # Store $ra
+
+# Check if n <= 1
+addi $t0, $0, 2        # $t0 = 2
+slt $t0, $a0, $t0      # n <= 1 ?
+beq $t0, $0, else      # If no, jump to else
+
+# Base case: n = 1, return 1
+addi $v0, $0, 1        # $v0 = 1
+addi $sp, $sp, 8       # Deallocate stack space
+jr $ra                 # Return
+
+else:                   # Recursive case
+# Recursive call: n * factorial(n - 1)
+addi $a0, $a0, -1      # n = n - 1
+jal factorial          # Call factorial function recursively
+
+# Epilogue: Restore stack and return
+lw $ra, 0($sp)         # Restore $ra
+lw $a0, 4($sp)         # Restore $a0
+addi $sp, $sp, 8       # Deallocate stack space
+mul $v0, $a0, $v0      # n * factorial(n - 1)
+jr $ra                 # Return

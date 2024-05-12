@@ -1,7 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineers: Grace Tseng <grace.tseng@cooper.edu>
+// Engineers: Lindsey Rodriguez
 // 
 //     Create Date: 2023-02-07
 //     Module Name: computer
@@ -19,29 +20,26 @@
 `include "../imem/imem.sv"
 `include "../dmem/dmem.sv"
 
-module computer
+module computer 
     #(parameter n = 32)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
+    
     input  logic           clk, reset, 
     output logic [(n-1):0] writedata, dataadr, 
     output logic           memwrite
 );
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
+    
     logic [(n-1):0] pc, instr, readdata;
 
-    // computer internal components
+    // Internal components
 
-    // the RISC CPU
+    // RISC CPU
     cpu mips(clk, reset, pc, instr, memwrite, dataadr, writedata, readdata);
-    // the instruction memory ("text segment") in main memory
+    
+    // Instruction memory ("text segment") in main memory
     imem imem(pc[7:2], instr);
-    // the data memory ("data segment") in main memory
+   
+    // Data memory ("data segment") in main memory
     dmem dmem(clk, memwrite, dataadr, writedata, readdata);
 
 endmodule
-
 `endif // COMPUTER

@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2024
-// Engineer: Prof Rob Marano
+// Engineer: Grace Tseng <grace.tseng@cooper.edu>
 // 
 //     Create Date: 2023-02-07
 //     Module Name: signext
@@ -16,17 +16,14 @@
 `timescale 1ns/100ps
 
 module signext
-    #(parameter n = 32, i = 16)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
-    input  logic [(i-1):0] A,
-    output logic [(n-1):0] Y
+    (
+    input  logic [(15):0] A,
+    output logic [(31):0] C
 );
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    assign Y = { {n{A[(i-1)]}}, A}; // sign extend (i-1)th bit i bits to the left.
+    assign C = {{(16){A[15]}}, A}; // rewritten
 endmodule
 
 `endif // SIGNEXT

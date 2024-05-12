@@ -21,7 +21,7 @@ module alu
 #(parameter n = 32) 
 (
     input logic clk,
-    input logic [n-1:0] a, b,
+    input logic [n-1:0] scra, scrb,
     input logic [2:0] alucontrol,
     output logic [n-1:0] result,
     output logic zero
@@ -39,7 +39,7 @@ module alu
     always_ff @(posedge clk) begin
         case (alucontrol)
             3'b011: begin // Multiplication
-                next <= {32'b0, a * b}; 
+                next <= {32'b0, scra * scrb}; 
             end
             default: begin 
                 next <= osc;
@@ -50,13 +50,13 @@ module alu
     always_ff @(posedge clk) begin
         case (alucontrol)
             3'b000: begin // Bitwise AND
-                result <= a & b;
+                result <= scra & scrb;
             end
             3'b001: begin // Bitwise OR
-                result <= a | b;
+                result <= scra | scrb;
             end
             3'b010: begin // Addition
-                result <= a + b;
+                result <= scra + scrb;
             end
             3'b100: begin 
                 result <= osc[n-1:0];
